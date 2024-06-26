@@ -7,7 +7,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Documentación Técnica Canales Digitales",
-  tagline: "Documentación Técnica, sobre los productos de Canales Digitales, Integración Menú, Integración de Ordenes, Integración Cambios de Estados, Etc...",
+  tagline: "Documentación Técnica, sobre los productos de Canales Digitales, Integración Menú, Integración de Ordenes, Integración Cambios de Estados, Etc..",
   url: "https://kfc.com.ec",
   baseUrl: "/",
   onBrokenLinks: "throw",
