@@ -9,7 +9,7 @@ const config = {
   title: "Documentación Técnica Canales Digitales",
   tagline: "Documentación Técnica, sobre los productos de Canales Digitales, Integración Menú, Integración de Ordenes, Integración Cambios de Estados, Etc..",
   url: "https://kfc.com.ec",
-  baseUrl: "/",
+  baseUrl: "/docs-canales-digitales",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
