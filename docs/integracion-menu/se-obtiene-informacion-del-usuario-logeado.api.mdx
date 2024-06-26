@@ -1,0 +1,54 @@
+---
+id: se-obtiene-informacion-del-usuario-logeado
+title: "Se obtiene información del usuario logeado."
+description: "Se obtiene información del usuario logeado."
+sidebar_label: "Se obtiene información del usuario logeado."
+hide_title: true
+hide_table_of_contents: true
+api: eJy9Vk1vGzcQ/SvEnmJhLdlugwY61YnV1GjrGq59KBwfRrujFZ1dcssPwYqgH5Njj0V/gv9Y33AlWbIMNAWKXOwVyRnOvHnzhossUOWz4W12GgOboAsqtDVqQDFMs7s8a8lRw4GdHFpk2mTDbMpUssvyzGALv2E6tU5/ogBTLPtiyg1lw0UW5q0c8MFpU2FnYl1DAStvmRxcLPPM8R9ROy6zYXCRl3ey4ltrPHvxcHJ0JP9K9oXTbbpgmP2mVU2qwKFYB1Ls8e0cF/j2rJrIuJBUbb0qKdjVrjgtNXKE4zyDseQrvqlta+Qtvgf3Xi5Y7Kdgx/fwD8PW2ZZd0F140bPrUNhPlh+oaWtZorIBcEgWPnX9BWe/T3/7hW3EaqKdDxf/esuZjVVNXizw7wsMLihMKVvifNAhrfwyPy0KG4HLcinr376E/lsqlVQNKP9/QBa23I7WxGacKLZ79YWVYrfW63HNCh4K9uSEDC2Du/rxb9PHtlN8z0jS5sprE+hBgwmsvEV4OsRSNVSrxMWScgWuNCT7DRtP9/zsrLFq9vi51iVtgwdkgE/D3lP1Isy7gZ9xoBohl1wrdg4R2iI6p0urEEpicqMRdq1OL893inRuZoTL1diW851ajcTN1aoO63Id75frxkdy2koetO7x0n7tyo1qFZ8CQZdOaTscxUaS99oHXNrfRfr46yB9bT8iCtSenqQQhFLadPW3O/BfWJG9FfCvX+qTVCBYQzzNJkF2M3jaDkoZPcMO7gWSurIp8vW5XLgt2iVVBssj49wMMIL1nquYnAbditUq3YLaEJ1gmhoh5amuYD6JdcrgmZaysmPU0jBCTT3RZS1RrCtW2wqSb6UsmAVTC7HOKk5UgITgRxoXA+q0Y9DMD1efMgyQyXp6RFfL+AihHQ4GJ0f97076b970v3k9oFYPZscDNGD0exW9RuyoNBCcaWcNDgWIHAaFxJsIsSrJu1+vRinbQ3UO1Cu3SUWdcQ2U3Vxd1hQkS/XqtHJcISuge7B358bevmyeQ4fC42dVas+Pf0FGlAxKII7BiECDuHYq5QOmF5q6okG74IASzElmyrVjSL1Vr27QOrm6QjvqXF1yCQr43yFRo1AcpCsp8WmTWRdErSuJgFSv997F1v70w7ter69GcrwE0QSxDRTSHSSsmkQj6Ym4QNAhI4ofMCJZKCNIHgqSadmraFKCQQIW250g9rGFhyKi26ASjYaRTOJJHe/tZlDbTmS1KVBRvBw2hUqQ5dKnE11Ft7ehDWTZPjdG2OLaQNiRA6LL1UyDvPVqV86jJFAX193MM2Biu4uwVqs51AHU5+27OBT9D+aD6fXQ6umBk6Lp9WTxZzhqHv8MFiUS5KRB5cus8UtMxBiB2iEANASnqQUr1JUAIFBVYaM5so95VepiajfLYxYlSMx/Ekk2BY35kyy8+jE9xQ5WZXkagiC0dF1H5uP+Uf9IngUYnKGhpO6rp9t/7P6dJtkoceCHMACxuzdOavLFShlus/SQzLMnQdhSB/TwFCHJscViTJ5vXL1cyjJ45+ZYx2dqnLE0+O0d3K8enyInH3kur08g14pjzMmYXlDPh5loxUa33o+uoYL/ACiD4xU=
+sidebar_class_name: "get api-method"
+info_path: docs/integracion-menu/core-api-integracion-de-delivery-platform-agregadores
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1 className={"openapi__heading"}>Se obtiene información del usuario logeado.</h1>
+
+<MethodEndpoint method={"get"} path={"/auth/account/my-account"}></MethodEndpoint>
+
+
+
+Se obtiene información del usuario logeado.
+
+## Request
+
+<details style={{"marginBottom":"1rem"}} className={"openapi-markdown__details"} data-collapsed={false} open={true}><summary style={{}}><h3 className={"openapi-markdown__details-summary-header-params"}>Header Parameters</h3></summary><div><ul><ParamsItem className={"paramsItem"} param={{"in":"header","name":"Authorization","schema":{"type":"string","format":"Bearer"},"required":true}}></ParamsItem></ul></div></details><div><div><ApiTabs label={undefined} id={undefined}><TabItem label={"200"} value={"200"}><div>
+
+Si la consulta es correcta se muestra los datos correspondientes
+
+</div><div><MimeTabs className={"openapi-tabs__mime"} schemaType={"response"}><TabItem label={"application/json"} value={"application/json"}><SchemaTabs className={"openapi-tabs__schema"}><TabItem label={"Schema"} value={"Schema"}><details style={{}} className={"openapi-markdown__details response"} data-collapsed={false} open={true}><summary style={{}} className={"openapi-markdown__details-summary-response"}><strong>Schema</strong></summary><div style={{"textAlign":"left","marginLeft":"1rem"}}></div><ul style={{"marginLeft":"1rem"}}><SchemaItem collapsible={false} name={"username"} required={false} schemaName={"string"} qualifierMessage={undefined} schema={{"type":"string","example":"admin"}}></SchemaItem><SchemaItem collapsible={false} name={"email"} required={false} schemaName={"string"} qualifierMessage={undefined} schema={{"type":"string","example":"admin@admin.com"}}></SchemaItem><SchemaItem collapsible={false} name={"firstName"} required={false} schemaName={"string"} qualifierMessage={undefined} schema={{"type":"string","example":"Douglas"}}></SchemaItem><SchemaItem collapsible={false} name={"lastName"} required={false} schemaName={"string"} qualifierMessage={undefined} schema={{"type":"string","example":"Natha"}}></SchemaItem></ul></details></TabItem><TabItem label={"Example (from schema)"} value={"Example (from schema)"}><ResponseSamples responseExample={"{\n  \"username\": \"admin\",\n  \"email\": \"admin@admin.com\",\n  \"firstName\": \"Douglas\",\n  \"lastName\": \"Natha\"\n}"} language={"json"}></ResponseSamples></TabItem></SchemaTabs></TabItem></MimeTabs></div></TabItem><TabItem label={"400"} value={"400"}><div>
+
+Bad request
+
+</div><div><MimeTabs className={"openapi-tabs__mime"} schemaType={"response"}><TabItem label={"application/json"} value={"application/json"}><SchemaTabs className={"openapi-tabs__schema"}><TabItem label={"Schema"} value={"Schema"}><details style={{}} className={"openapi-markdown__details response"} data-collapsed={false} open={true}><summary style={{}} className={"openapi-markdown__details-summary-response"}><strong>Schema</strong></summary><div style={{"textAlign":"left","marginLeft":"1rem"}}></div><ul style={{"marginLeft":"1rem"}}><SchemaItem collapsible={false} name={"code"} required={false} schemaName={"number"} qualifierMessage={undefined} schema={{"type":"number","description":"No es posible procesar la petición. por ejemplo, sintaxis de solicitud mal formada, trama de mensajes de solicitud no válida","example":400}}></SchemaItem><SchemaItem collapsible={false} name={"message"} required={false} schemaName={"string"} qualifierMessage={undefined} schema={{"type":"string","description":"Detalle del error ocurrido al consumir el API","example":"Invalid body"}}></SchemaItem></ul></details></TabItem><TabItem label={"Example (from schema)"} value={"Example (from schema)"}><ResponseSamples responseExample={"{\n  \"code\": 400,\n  \"message\": \"Invalid body\"\n}"} language={"json"}></ResponseSamples></TabItem></SchemaTabs></TabItem></MimeTabs></div></TabItem><TabItem label={"401"} value={"401"}><div>
+
+Usuario no autenticado
+
+</div><div><MimeTabs className={"openapi-tabs__mime"} schemaType={"response"}><TabItem label={"application/json"} value={"application/json"}><SchemaTabs className={"openapi-tabs__schema"}><TabItem label={"Schema"} value={"Schema"}><details style={{}} className={"openapi-markdown__details response"} data-collapsed={false} open={true}><summary style={{}} className={"openapi-markdown__details-summary-response"}><strong>Schema</strong></summary><div style={{"textAlign":"left","marginLeft":"1rem"}}></div><ul style={{"marginLeft":"1rem"}}><SchemaItem collapsible={false} name={"code"} required={false} schemaName={"number"} qualifierMessage={undefined} schema={{"type":"number","description":"El usuario no se ha autenticado en el sistema.","example":401}}></SchemaItem><SchemaItem collapsible={false} name={"message"} required={false} schemaName={"string"} qualifierMessage={undefined} schema={{"type":"string","description":"Detalle del error ocurrido al consumir el API","example":"Token de autenticación inválido"}}></SchemaItem></ul></details></TabItem><TabItem label={"Example (from schema)"} value={"Example (from schema)"}><ResponseSamples responseExample={"{\n  \"code\": 401,\n  \"message\": \"Token de autenticación inválido\"\n}"} language={"json"}></ResponseSamples></TabItem></SchemaTabs></TabItem></MimeTabs></div></TabItem><TabItem label={"500"} value={"500"}><div>
+
+Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+
+</div><div></div></TabItem></ApiTabs></div></div>
+      
