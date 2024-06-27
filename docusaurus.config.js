@@ -141,7 +141,7 @@ const config = {
         docsPluginId: "classic",
         config: {
           petstore: {
-            specPath: "examples/integracion-menu.json",
+            specPath: "examples/integracion-menu.yaml",
             outputDir: "docs/integracion-menu",
             sidebarOptions: {
               groupPathsBy: "tag",
