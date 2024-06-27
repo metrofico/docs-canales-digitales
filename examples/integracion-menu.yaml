@@ -1,0 +1,637 @@
+openapi: 3.0.0
+info:
+  title: CORE API - Integración de Delivery Platform (Agregadores)
+  description: Integracion de Delivery Platform, está diseñada para poder entregar menus hacia varias plataformas de delivery como (Uber, Rappi, PedidosYa, Etc), esta integración está ligada a **GrupoKFC**.
+    Esta documentación detalla la funcionalidad que expone el CORE-API que es una parte de la integración Delivery Platform el cual permite los flujos correctos de sincronización de menus, configuración de menus, inicio de sincronizaciones con maxpoint, visualizacion de registros de eventos, control y almacen de menus, etc.
+    
+    
+    **Autorización**
+    
+    
+    Los métodos expuestos en el CORE API solo son accesibles mediante un token de acceso, dicho token debe ser enviado en el encabezado (Header) de la petición.
+  version: 1.0.0
+
+servers:
+  - url: http://20.72.88.35/api/v1/menus
+    description: Testing environments
+
+tags:
+  - name: Autenticacion
+    description: Es el metodo de autenticación para los usuarios a nivel de la APP-WEB (UI)
+  - name: Agregadores
+    description: Administrador de agregadores
+  - name: Configuraciones
+    description: Gestión de la configuración para la sincronización de agregadores
+  - name: Sincronización
+    description: Métodos de sincronización con MaxPoint.
+
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Autenticacion
+      summary: Metodo de autenticación para la interfaz de usuario (APP-WEB)
+      security: []
+      requestBody:
+        description: Es la petición que se hace desde la WEB (Cliente) hacia el BACKEND de autenticación.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Cuando el inicio de sesión es correcto se debería retornar esta respuesta, la cual es usada para la siguiente consulta de obtención de informacion completa del usuario. esto puede revisarse en jwt.io para ver el contenido del token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtResponse'
+        '401':
+          description: Error al autenticar al usuario (credenciales no válidas)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorFailLogin'
+        '400':
+          description: Error interno (mal formacion de json), (falta de informacion en la solicitud)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /auth/refresh:
+    post:
+      tags:
+        - Autenticacion
+      summary: Método de autenticación para refrescar el token anterior generado,
+      requestBody:
+        description: Aquí en la solicitud se debe pasar el refreshToken una vez el accessToken haya expirado, con esto generamos un nuevo accessToken y un nuevo refreshToken
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        '200':
+          description: Cuando el refresco del token es correcto vamos a recibir nuevamente esta información actualizada un accessToken y un refreshToken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtResponse'
+        '400':
+          description: Cuando el token de refresco ha expirado o ocurrio un error al intentar refresar se retornará este error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRequest'
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+
+  /auth/account/my-account:
+    get:
+      tags:
+        - Autenticacion
+      summary: Se obtiene información del usuario logeado.
+      # parameters:
+      #   - in: header
+      #     name: Authorization
+      #     schema:
+      #       type: string
+      #       format: Bearer
+      #     required: false
+      responses:
+        '200':
+          description: Si la consulta es correcta se muestra los datos correspondientes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyAccount'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRequest'
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+
+  /aggregators:
+    get:
+      tags:
+        - Agregadores
+      summary: Retorna la lista de todos los agregadores
+      description: Este endpoint es utilizado para obtener la lista de agregadores es decir [ Uber, Rappi, Peya, Etc ...] es utilizado principalmente para la App-Web (UI) en la sección de configuración.
+      # parameters:
+      #   - in: header
+      #     name: Authorization
+      #     schema:
+      #       type: string
+      #       format: Bearer
+      #     required: true
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito retorna todos los agregadores.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Aggregator'
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+
+  /configurations/last:
+    get:
+      tags:
+        - Configuraciones
+      summary: Se obtiene la ultima configuracion registrada.
+      # parameters:
+      #   - in: header
+      #     name: Authorization
+      #     schema:
+      #       type: string
+      #       format: Bearer
+      #     required: true
+      responses:
+        '200':
+          description: Si se guardo la configuracion, retornará la siguiente información.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationWrapperCustom'
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /configurations:
+    put:
+      tags:
+        - Configuraciones
+      summary: Creación y actualización de la configuración parar la ejecución de sincronización de los agregadores.
+      # parameters:
+      #   - in: header
+      #     name: Authorization
+      #     schema:
+      #       type: string
+      #       format: Bearer
+      #     required: true
+      requestBody:
+        description: |
+          Esquema de configuración. 
+          
+          Escenario 1.- Cuando el campo "syncMaxPoint" es "true" se empieza la sincronización con Maxpoint a la hora establecida "syncTime".
+          
+          Escenario 2.- Cuando el campo "syncMaxPoint" es "false" se desactiva la sincronizacón con Maxpoint.
+        required: true
+        content:
+          aplication/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateConfigurationRequest'
+      responses:
+        '200':
+          description: Si el proceso se ejecuta correctamente mostrará la siguiente respuesta.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/CustomResponse'
+        '400':
+          description: El servidor no puede o no quiere procesar la solicitud debido a algo que se percibe como un error del cliente (por ejemplo, sintaxis de solicitud mal formada, trama de mensajes de solicitud no válida o enrutamiento de solicitud engañoso).El servidor no puede o no quiere procesar la solicitud debido a algo que se percibe como un error del cliente (por ejemplo, sintaxis de solicitud mal formada, trama de mensajes de solicitud no válida).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRequest'
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /sync/all:
+    post:
+      tags:
+        - Sincronización
+      summary: Método para la ejecución de la sincronización inmediata.
+      # parameters:
+      #   - in: header
+      #     name: Authorization
+      #     schema:
+      #       type: string
+      #       format: Bearer
+      #     required: true
+      responses:
+        '200':
+          description: Si el proceso se ejecuta correctamente mostrará la siguiente respuesta.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/CustomResponseSync'
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Es el usuario de la cuenta del cliente al acceder a la pantalla de Login
+          example: admin
+        password:
+          type: string
+          description: Es la contraseña de la cuenta del cliente al acceder a la pantalla de Login
+          example: 12345
+    JwtResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Token de autenticación del Usuario se puede revisar el token en (jwt.io)
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTkwNzMyOTcsImlkIjoiNjY0NTNiMjIwMjZkNzBlMTA3ZDk0NDU1IiwidXNlcm5hbWUiOiJhZG1pbiJ9.akLOKrBWhF0xk44fM7PMcsuX-8VhBCjIbDN_VgR7MXQ
+        refreshToken:
+          type: string
+          description: Token para refrescar el token de acceso ( accessToken )
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTk1OTE2OTcsImlkIjoiNjY0NTNiMjIwMjZkNzBlMTA3ZDk0NDU1IiwidXNlcm5hbWUiOiJhZG1pbiJ9.aPEHGpGd6SpXiAYoyIoDo4SUwOpoGqDO-tgrTax_Vrk
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Codigo de error (Mismo que HTTP Response)
+          example: 400
+        message:
+          type: string
+          description: Detalle del error ocurrido al consumir el API
+          example: Invalid login body
+
+    ErrorRequest:
+      type: object
+      properties:
+        code:
+          type: number
+          description: No es posible procesar la petición. por ejemplo, sintaxis de solicitud mal formada, trama de mensajes de solicitud no válida
+          example: 400
+        message:
+          type: string
+          description: Detalle del error ocurrido al consumir el API
+          example: Invalid body
+
+    ErrorInternal:
+      type: object
+      properties:
+        code:
+          type: number
+          description: No es posible procesar la petición error interno en el servidor ocurrido a nivel de codigo del servidor.
+          example: 500
+        message:
+          type: string
+          description: Detalle del error ocurrido al consumir el API
+          example: Internal Server Error
+
+    ErrorResponseFailedRefreshToken:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Codigo de error (Mismo que HTTP Response)
+          example: 400
+        message:
+          type: string
+          description: Detalle del error ocurrido al consumir el API
+          example: Invalid token
+    ErrorFailLogin:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Codigo de Error que representa el fallo de inicio de sesion (credenciales incorrectas)
+          example: 400
+        message:
+          type: string
+          description: Detalle del error ocurrido al consumir el API
+          example: The credentials are not valid
+    NoAuth:
+      type: object
+      properties:
+        code:
+          type: number
+          description: El usuario no se ha autenticado en el sistema.
+          example: 401
+        message:
+          type: string
+          description: Detalle del error ocurrido al consumir el API
+          example: Token de autenticación inválido
+    RefreshRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTk1OTI2MjcsImlkIjoiNjY0NTNiMjIwMjZkNzBlMTA3ZDk0NDU1IiwidXNlcm5hbWUiOiJhZG1pbiJ9.AvQ9yI2WP5IuZNzls9LJGLwuvPGI3AC8j7YA8gu_Uq8
+          description: Token de autenticación para la ejecución del refresh.
+    MyAccount:
+      type: object
+      properties:
+        username:
+          type: string
+          example: admin
+          description: Nombre de usuario que sirve como identificación por cuenta.
+        email:
+          type: string
+          example: admin@admin.com
+          description: Correo electrónico perteneciente a la cuenta.
+        firstName:
+          type: string
+          example: Douglas
+          description: Nombre perteneciente a la cuenta.
+        lastName:
+          type: string
+          example: Natha
+          description: Apellido perteneciente a la cuenta.
+
+    Aggregator:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+          description: Código de identificación del agregador.
+        name:
+          type: string
+          example: Uber
+          description: Nombre del agregador.
+        isActive:
+          type: boolean
+          example: true
+          description: Campo de identificación si el agregador se encuentra activo.
+
+    ConfigurationAggregator:
+      type: object
+      properties:
+        aggregator:
+          $ref: '#/components/schemas/Aggregator'
+        syncTime:
+          type: string
+    Configuration:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 6675cd09a04f3b451a6c5f57
+        syncMaxPoint:
+          type: boolean
+          example: true
+        syncTime:
+          type: string
+        aggregators":
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationAggregator'
+    ConfigurationWrapper:
+      type: object
+      properties:
+        last:
+          $ref: '#/components/schemas/Configuration'
+
+    CreateOrUpdateConfigurationAggregatorRequest:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+          description: Código de identificación del agregador.
+        syncTime:
+          type: string
+          example: 10:00:00
+          description: Tiempo definido para la ejecución de la sincronización del agregador.
+    CreateOrUpdateConfigurationRequest:
+      type: object
+      properties:
+        syncMaxPoint:
+          type: boolean
+          example: true
+          description: Campo para la definición de sincronización con MaxPoint.
+        syncTime:
+          type: string
+          example: 10:00:00
+          description: Tiempo definido para la ejecución de la sincronización.
+        aggregators:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateOrUpdateConfigurationAggregatorRequest'
+
+    ConfigurationAggregatorNew:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+          description: Código de identificación del agregador.
+        name:
+          type: string
+          example: Uber
+          description: Nombre del agregador.
+        syncTime:
+          type: string
+          example: 15:00:00
+          description: Tiempo definido para la sincronización del agregador.
+        active:
+          type: string
+          example: true
+          description: Campo para la identificación si el agregador se encuentra activo.
+    ConfigurationCustom:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 6675cd09a04f3b451a6c5f57
+          description: Identificación de la configuración.
+        syncMaxPoint:
+          type: boolean
+          example: true
+          description: Campo de identificación si la sincronización se realiza con MaxPoint
+        syncTime:
+          type: string
+          example: 15:00:00
+          description: Tiempo definido para la sincronización con MaxPoint.
+        aggregators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationAggregatorNew'
+    ConfigurationWrapperCustom:
+      type: object
+      properties:
+        last:
+          $ref: '#/components/schemas/ConfigurationCustom'
+
+    CustomResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+          description: Código de respuesta HTTP
+        message:
+          type: string
+          example: Configuración guardada
+          description: Mensaje que detalla la respuesta de la petición.
+
+    CustomResponseSync:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+          description: Código de respuesta HTTP
+        message:
+          type: string
+          example: Sincronización ejecutada
+          description: Mensaje que detalla la respuesta de la petición.
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Este esquema utiliza el token Bearer para la autenticación. 
+        Asegúrate de enviar el token en el encabezado de la solicitud como se muestra a continuación:
+        
+        `Authorization: Bearer {{TOKEN}}`
+
+security:
+  - BearerAuth: []
