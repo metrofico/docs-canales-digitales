@@ -59,7 +59,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: yarn install --frozen-lockfile
-    # Opcional: Limpia el directorio de publicación para evitar problemas de caché
+    - name: Clean All OpenAPI
+      run: yarn docusaurus clean-api-docs all
+    - name: Generate New All OpenAPI
+      run: yarn docusaurus gen-api-docs all
+      # Opcional: Limpia el directorio de publicación para evitar problemas de caché
     - name: Clean up Publish Directory
       run: rm -rf ./build
     - run: yarn build
