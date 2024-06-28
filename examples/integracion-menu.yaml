@@ -375,7 +375,7 @@ components:
         password:
           type: string
           description: Es la contraseña de la cuenta del cliente al acceder a la pantalla de Login
-          example: 12345
+          example: "12345"
     JwtResponse:
       type: object
       properties:
