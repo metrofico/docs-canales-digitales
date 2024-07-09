@@ -318,7 +318,7 @@ paths:
   /sync:
     get:
       tags:
-        - Obtener el historial de las Sincronizaciones con Maxpoint
+        - Sincronización
       summary: Método que obtiene el historial de las sincronizaciones con Maxpoint.
       parameters:
         - in: query
@@ -378,7 +378,7 @@ paths:
   /dashboard/sync/error/{id}:
     get:
       tags:
-        - Obtener el historial de errores de una Sincronización específica de Maxpoint.
+        - Sincronización
       summary: Método que obtiene el historial de errores de una Sincronización específica de Maxpoint
       parameters:
         - in: path
