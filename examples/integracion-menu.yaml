@@ -315,6 +315,122 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorInternal'
+  /sync:
+    get:
+      tags:
+        - Obtener el historial de las Sincronizaciones con Maxpoint
+      summary: Método que obtiene el historial de las sincronizaciones con Maxpoint.
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+            description: Número de página
+        - in: query
+          name: size
+          schema:
+            type: integer
+            example: 10
+          description: Número de registros por página
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            format: Bearer
+          required: true
+      responses:
+        '200':
+          description: Si el proceso se ejecuta correctamente mostrará la siguiente respuesta.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/SyncHistoryResponse'
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                 summary: Token Invalido
+                 value:
+                  code: 401
+                  message: Token de autenticación inválido
+                Invalid Scheme:
+                 summary: Esquema invalido
+                 value:
+                  code: 401
+                  message: Esquema de autenticacion no valido
+                Invalid Header:
+                 summary: Header de autorización no proporcionado
+                 value:
+                  code: 401
+                  message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  
+  /dashboard/sync/error/{id}:
+    get:
+      tags:
+        - Obtener el historial de errores de una Sincronización específica de Maxpoint.
+      summary: Método que obtiene el historial de errores de una Sincronización específica de Maxpoint
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            example: 6675cd09a04f3b451a6c5f57
+          required: true
+          description: Identificador de la sincronización
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            format: Bearer
+          required: true
+      responses:
+        '200':
+          description: Si el proceso se ejecuta correctamente mostrará la siguiente respuesta.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/SyncErrorResponse'
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                 summary: Token Invalido
+                 value:
+                  code: 401
+                  message: Token de autenticación inválido
+                Invalid Scheme:
+                 summary: Esquema invalido
+                 value:
+                  code: 401
+                  message: Esquema de autenticacion no valido
+                Invalid Header:
+                 summary: Header de autorización no proporcionado
+                 value:
+                  code: 401
+                  message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  
+
   /sync/all:
     post:
       tags:
@@ -621,6 +737,73 @@ components:
           type: string
           example: Sincronización ejecutada
           description: Mensaje que detalla la respuesta de la petición.
+    
+    SyncHistoryResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              syncros_id:
+                type: string
+                example: "01ef3e10-761c-64bf-8af0-2606f1302901"
+              start_time:
+                type: string
+                format: date-time
+                example: "2024-07-09 16:29:49.375 +0000 UTC"
+              end_time:
+                type: string
+                format: date-time
+                nullable: true
+                example: "2024-07-09 16:35:49.375 +0000 UTC"
+              error_msg:
+                type: string
+                example: ""
+              status:
+                type: string
+                example: "FINISHED"
+        total_records:
+          type: integer
+          example: 7
+    
+    SyncErrorResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: "668d62e9217f587b26adbd73"
+          aggregate_id:
+            type: string
+            example: "01ef3e0e-0c6c-6bb7-8af0-2606f1302901"
+          event_type:
+            type: string
+            example: "MenuMaxpointSyncError"
+          metadata:
+            type: array
+            items:
+              type: object
+              properties:
+                Key:
+                  type: string
+                  example: "syncid"
+                Value:
+                  type: string
+                  example: "01ef3e0e-0c6c-6bb7-8af0-2606f1302901"
+          data:
+            type: string
+            example: "grpc core-engine: failed to change state sync: No se encontró el syncros con id: 01ef3e0e-0c6c-6bb7-8af0-2606f1302901"
+          fecha:
+            type: string
+            format: date-time
+            example: "2024-07-09 11:18:49"
+          created_at:
+            type: string
+            format: date-time
+            example: "2024-07-09T11:18:49.525-05:00"
     
   securitySchemes:
       BearerAuth:
