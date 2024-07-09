@@ -24,6 +24,8 @@ tags:
     description: Gestión de la configuración para la sincronización de agregadores
   - name: Sincronización
     description: Métodos de sincronización con MaxPoint.
+  - name: Menú
+    description: Métodos para la obtención de los menús y entidades relacionadas al menú.
     
 
 paths:
@@ -479,6 +481,209 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorInternal'
   
+  /menu/chainsall:
+    post:
+      tags:
+        - Menú
+      summary: Método para la obtención de las cadenas de suministro.
+      #parameters:
+      #  - in: header
+      #    name: Authorization
+      #    schema:
+      #      type: string
+      #      format: Bearer
+      #    required: true
+      responses:
+        '200':
+          description: Si el proceso se ejecuta correctamente mostrará la siguiente respuesta.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Chains'
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                 summary: Token Invalido
+                 value:
+                  code: 401
+                  message: Token de autenticación inválido
+                Invalid Scheme:
+                 summary: Esquema invalido
+                 value:
+                  code: 401
+                  message: Esquema de autenticacion no valido
+                Invalid Header:
+                 summary: Header de autorización no proporcionado
+                 value:
+                  code: 401
+                  message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /menu/findrestaurants:
+    post:
+      tags:
+        - Menú
+      summary: Método para la obtención de las cadenas de suministro.
+      #parameters:
+      #  - in: header
+      #    name: Authorization
+      #    schema:
+      #      type: string
+      #      format: Bearer
+      #    required: true
+      requestBody:
+        description: El EndPoint espera recibir una lista de id que representan las cadenas seleccionadas que se desean obtener sus restaurantes.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindRestaurantsRequest'
+      responses:
+        '200':
+          description: Si el proceso se ejecuta correctamente mostrará la siguiente respuesta.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/Restaurants'
+        '204':
+          description: Si el proceso no devuelve los datos esperados, porque no existe la información requerida.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/ResponseDataNoExists'
+        '400':
+          description: El servidor no puede o no quiere procesar la solicitud debido a algo que se percibe como un error del cliente (por ejemplo, sintaxis de solicitud mal formada, trama de mensajes de solicitud no válida o enrutamiento de solicitud engañoso).El servidor no puede o no quiere procesar la solicitud debido a algo que se percibe como un error del cliente (por ejemplo, sintaxis de solicitud mal formada, trama de mensajes de solicitud no válida).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRequest'
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                 summary: Token Invalido
+                 value:
+                  code: 401
+                  message: Token de autenticación inválido
+                Invalid Scheme:
+                 summary: Esquema invalido
+                 value:
+                  code: 401
+                  message: Esquema de autenticacion no valido
+                Invalid Header:
+                 summary: Header de autorización no proporcionado
+                 value:
+                  code: 401
+                  message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /menu/findmenus:
+    post:
+      tags:
+        - Menú
+      summary: Método para la obtención de los menús agrupados por sincronización basado en los filtros.
+      requestBody:
+        description: El EndPoint espera recibir una lista de id que representan las cadenas seleccionadas que se desean obtener sus restaurantes.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindMenusRequest'
+            examples:
+              Payload1:
+                summary: Payload sin filtro nombre menú
+                description: Payload enviado al EndPoint sin el campo de filtro por nombre menú añadido. Esto realiza la consulta solo basandose a los filtros principales.
+                value:
+                  restaurants:
+                    - id: 16
+                      codeStore: "F001"
+                  dates:
+                    startDate: "2024-07-08T00:00:00.000Z"
+                    endDate: "2024-07-09T00:00:00.000Z"
+                  page: 1
+                  pageSize: 5
+              Payload2:
+                summary: Payload con filtro nombre menú
+                description: Payload enviado al EndPoint con el campo de filtro por nombre menú añadido. Esto aumenta el filtro de nombre menú para la búsqueda. Este campo no es obligatorio.
+                value:
+                  restaurants:
+                    - id: 16
+                      codeStore: "F001"
+                  dates:
+                    startDate: "2024-07-08T00:00:00.000Z"
+                    endDate: "2024-07-09T00:00:00.000Z"
+                  page: 1
+                  pageSize: 5
+                  otherFilters:
+                    searchNameMenu:
+                      enable: true
+                      nameMenu: "RAPPI"
+      responses:
+        '200':
+          description: Si el proceso se ejecuta correctamente mostrará la siguiente respuesta.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/FindMenusResponse'
+        '204':
+          description: Si el proceso no devuelve los datos esperados, porque no existe la información requerida.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/ResponseDataNoExists'
+        '400':
+          description: El servidor no puede o no quiere procesar la solicitud debido a algo que se percibe como un error del cliente (por ejemplo, sintaxis de solicitud mal formada, trama de mensajes de solicitud no válida o enrutamiento de solicitud engañoso).El servidor no puede o no quiere procesar la solicitud debido a algo que se percibe como un error del cliente (por ejemplo, sintaxis de solicitud mal formada, trama de mensajes de solicitud no válida).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRequest'
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                 summary: Token Invalido
+                 value:
+                  code: 401
+                  message: Token de autenticación inválido
+                Invalid Scheme:
+                 summary: Esquema invalido
+                 value:
+                  code: 401
+                  message: Esquema de autenticacion no valido
+                Invalid Header:
+                 summary: Header de autorización no proporcionado
+                 value:
+                  code: 401
+                  message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+      
+  
 components:
   schemas:
     LoginRequest:
@@ -805,6 +1010,239 @@ components:
             format: date-time
             example: "2024-07-09T11:18:49.525-05:00"
     
+    Chains:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 3
+            description: Identificador de la cadena.
+          description:
+            type: string
+            example: "BASKIN ROBBINS"
+            description: Descripción de la cadena.
+          tradename:
+            type: string
+            example: "BASKIN ROBBINS"
+            description: Nombre comercial de la cadena.
+    FindRestaurantsRequest:
+      type: object
+      properties:
+        id:
+          type: array
+          items:
+            type: integer
+            example: [1, 2, 3, 10]
+            description: Lista de identificadores de cadenas.
+    Restaurants:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 3
+            description: Identificador del resturante.
+          idChain:
+            type: integer
+            example: 10
+            description: Identificador de la cadena.
+          codeStore:
+            type: string
+            example: "K002"
+            description: Código de la tienda.
+    FindMenusRequest:
+      type: object
+      properties:
+        restaurants:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 16
+                description: Identificador del restaurante.
+              codeStore:
+                type: string
+                example: "F001"
+                description: Código de la tienda/restaurante.
+        dates:
+          type: object
+          properties:
+            startDate:
+              type: string
+              example: "2024-07-08T00:00:00.000Z"
+              description: Fecha de filtro donde debe iniciar la búsqueda.
+            endDate:
+              type: string
+              example: "2024-07-09T00:00:00.000Z"
+              description: Fecha de filtro donde debe finalizar la búsqueda.
+        page:
+          type: integer
+          example: 1
+          description: Número de la página que se encuentra.
+        pageSize:
+          type: integer
+          example: 5
+          description: Tamaño de la página actual.
+        otherFilters: 
+          type: object
+          properties:
+            searchNameMenu:
+              type: object
+              properties:
+                enable:
+                  type: boolean
+                  example: true
+                  description: Indicador si está habilitada la búsqueda por nombre de menú.
+                nameMenu:
+                  type: string
+                  example: "RAPPI"
+                  description: Nombre de menú.
+    FindMenusResponse:
+      type: object
+      properties:
+        groupSync:
+          type: array
+          items:
+            type: object
+            properties:
+              syncrosId:
+                type: string
+                example: "01ef3e20-2ae1-69ab-9a35-36d3764a73e8"
+                description: Identificador de la sincronización.
+              startTime:
+                type: string
+                example: "2024-07-09T18:22:15Z"
+                description: Tiempo de inicio de la sincronización.
+              endTime: 
+                type: string
+                example: "2024-07-09T18:28:56Z"
+                description: Tiempo de finalización de la sincronización.
+              status:
+                type: string
+                example: "FINISHED"
+                description: Estado de la sincronización.
+              menus:
+                type: array
+                items:
+                  type: string
+                  example: "61a562bf7a33ccc39ce6cf93487db36bcd5227ef3d910531681ddc16d46eb22c"
+                  description: Lista de checksum que representa a los menús pertenecientes a la sincronización.
+        groupMenu:
+          type: array
+          items:
+            type: object
+            properties:
+              checksum:
+                type: string
+                example: "61a562bf7a33ccc39ce6cf93487db36bcd5227ef3d910531681ddc16d46eb22c"
+                description: Identificador (checksum) del menú.
+              menus:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "01ef3d85-47c2-6f62-8312-bedb522f67d8"
+                      description: Identificador del menú.
+                    title:
+                      type: string
+                      example: "RAPPI"
+                      description: Titulo del menú.
+                    subtitle:
+                      type: string
+                      example: ""
+                      description: Subtitulo del menú.
+                    categoryids:
+                      type: array
+                      items:
+                        type: string
+                        example: "E217B666-88FD-EE11-8076-C89665503CDF"
+                        description: Lista de las categorias pertenecientes al menú.
+              categories:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "E217B666-88FD-EE11-8076-C89665503CDF"
+                      description: Identificador de la categoria.
+                    title:
+                      type: string
+                      example: "APPDESCUENTOS"
+                      description: Titulo de la categoria.
+                    subtitle:
+                      type: string
+                      example: ""
+                      description: Subtitulo de la categoria.
+                    entities:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: "46665"
+                            description: Identificador del item.
+                          type:
+                            type: string
+                            example: "ITEM"
+                            description: Tipo del item.
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "46665"
+                      description: Identificador del item (producto).
+                    title:
+                      type: string
+                      example: "CAJA CLASICO X 2"
+                      description: Titulo del item.
+                    description:
+                      type: string
+                      example: "Rollo clasico de canela o chocolate"
+                      description: Description del item.
+        pagination:
+          type: object
+          properties:
+            page:
+              type: integer
+              example: 1
+              description: Número de la página.
+            pageSize:
+              type: integer
+              example: 5
+              description: Tamaño de la página.
+            totalPages:
+              type: integer
+              example: 2
+              description: Tamaño total de las páginas.
+            totalRecords:
+              type: integer
+              example: 8
+              description: Total de los registros.
+    
+    ResponseDataNoExists:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 204
+          description: Código de respuesta HTTP.
+        message:
+          type: string
+          example: "No query data exists"
+          description: Detalle de la respuesta.
+  
   securitySchemes:
       BearerAuth:
        type: http
