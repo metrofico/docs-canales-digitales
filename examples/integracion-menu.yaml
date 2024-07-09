@@ -532,7 +532,7 @@ paths:
     post:
       tags:
         - Menú
-      summary: Método para la obtención de las cadenas de suministro.
+      summary: Método para la obtención de los restaurantes o tiendas.
       #parameters:
       #  - in: header
       #    name: Authorization
