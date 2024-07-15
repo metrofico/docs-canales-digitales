@@ -26,7 +26,7 @@ tags:
     description: Métodos de sincronización con MaxPoint.
   - name: Menú
     description: Métodos para la obtención de los menús y entidades relacionadas al menú.
-    
+
 
 paths:
   /auth/login:
@@ -71,7 +71,7 @@ paths:
     post:
       tags:
         - Autenticacion /auth
-      summary: Método de autenticación para refrescar el token anterior generado, 
+      summary: Método de autenticación para refrescar el token anterior generado,
       requestBody:
         description: Aquí en la solicitud se debe pasar el refreshToken una vez el accessToken haya expirado, con esto generamos un nuevo accessToken y un nuevo refreshToken
         required: true
@@ -128,31 +128,31 @@ paths:
           description: Usuario no autenticado
           content:
             application/json:
-              schema: 
+              schema:
                 $ref: '#/components/schemas/NoAuth'
               examples:
                 Invalid Token:
-                 summary: Token Invalido
-                 value:
-                  code: 401
-                  message: Token de autenticación inválido
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
                 Invalid Scheme:
-                 summary: Esquema invalido
-                 value:
-                  code: 401
-                  message: Esquema de autenticacion no valido
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
                 Invalid Header:
-                 summary: Header de autorización no proporcionado
-                 value:
-                  code: 401
-                  message: Encabezado de autorización no proporcionado
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
         '500':
           description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorInternal'
-          
+
   /aggregators:
     get:
       tags:
@@ -184,27 +184,27 @@ paths:
                 $ref: '#/components/schemas/NoAuth'
               examples:
                 Invalid Token:
-                 summary: Token Invalido
-                 value:
-                  code: 401
-                  message: Token de autenticación inválido
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
                 Invalid Scheme:
-                 summary: Esquema invalido
-                 value:
-                  code: 401
-                  message: Esquema de autenticacion no valido
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
                 Invalid Header:
-                 summary: Header de autorización no proporcionado
-                 value:
-                  code: 401
-                  message: Encabezado de autorización no proporcionado
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
         '500':
           description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorInternal'
-          
+
   /configurations/last:
     get:
       tags:
@@ -232,20 +232,20 @@ paths:
                 $ref: '#/components/schemas/NoAuth'
               examples:
                 Invalid Token:
-                 summary: Token Invalido
-                 value:
-                  code: 401
-                  message: Token de autenticación inválido
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
                 Invalid Scheme:
-                 summary: Esquema invalido
-                 value:
-                  code: 401
-                  message: Esquema de autenticacion no valido
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
                 Invalid Header:
-                 summary: Header de autorización no proporcionado
-                 value:
-                  code: 401
-                  message: Encabezado de autorización no proporcionado
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
         '500':
           description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
           content:
@@ -297,20 +297,20 @@ paths:
                 $ref: '#/components/schemas/NoAuth'
               examples:
                 Invalid Token:
-                 summary: Token Invalido
-                 value:
-                  code: 401
-                  message: Token de autenticación inválido
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
                 Invalid Scheme:
-                 summary: Esquema invalido
-                 value:
-                  code: 401
-                  message: Esquema de autenticacion no valido
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
                 Invalid Header:
-                 summary: Header de autorización no proporcionado
-                 value:
-                  code: 401
-                  message: Encabezado de autorización no proporcionado
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
         '500':
           description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
           content:
@@ -356,20 +356,20 @@ paths:
                 $ref: '#/components/schemas/NoAuth'
               examples:
                 Invalid Token:
-                 summary: Token Invalido
-                 value:
-                  code: 401
-                  message: Token de autenticación inválido
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
                 Invalid Scheme:
-                 summary: Esquema invalido
-                 value:
-                  code: 401
-                  message: Esquema de autenticacion no valido
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
                 Invalid Header:
-                 summary: Header de autorización no proporcionado
-                 value:
-                  code: 401
-                  message: Encabezado de autorización no proporcionado
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
         '500':
           description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
           content:
@@ -411,20 +411,20 @@ paths:
                 $ref: '#/components/schemas/NoAuth'
               examples:
                 Invalid Token:
-                 summary: Token Invalido
-                 value:
-                  code: 401
-                  message: Token de autenticación inválido
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
                 Invalid Scheme:
-                 summary: Esquema invalido
-                 value:
-                  code: 401
-                  message: Esquema de autenticacion no valido
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
                 Invalid Header:
-                 summary: Header de autorización no proporcionado
-                 value:
-                  code: 401
-                  message: Encabezado de autorización no proporcionado
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
         '500':
           description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
           content:
@@ -460,20 +460,20 @@ paths:
                 $ref: '#/components/schemas/NoAuth'
               examples:
                 Invalid Token:
-                 summary: Token Invalido
-                 value:
-                  code: 401
-                  message: Token de autenticación inválido
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
                 Invalid Scheme:
-                 summary: Esquema invalido
-                 value:
-                  code: 401
-                  message: Esquema de autenticacion no valido
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
                 Invalid Header:
-                 summary: Header de autorización no proporcionado
-                 value:
-                  code: 401
-                  message: Encabezado de autorización no proporcionado
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
         '500':
           description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
           content:
@@ -481,6 +481,54 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorInternal'
   
+  /sync/verify:
+    get:
+      tags:
+        - Sincronización
+      summary: Método para la verificación de la existencia de una sincronización en ese instante de la consulta.
+      # parameters:
+      #   - in: header
+      #     name: Authorization
+      #     schema:
+      #       type: string
+      #       format: Bearer
+      #     required: true
+      responses:
+        '200':
+          description: Si el proceso se ejecuta correctamente mostrará la siguiente respuesta.
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/verifyResponse'
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+
   /menu/chainsall:
     post:
       tags:
@@ -508,20 +556,20 @@ paths:
                 $ref: '#/components/schemas/NoAuth'
               examples:
                 Invalid Token:
-                 summary: Token Invalido
-                 value:
-                  code: 401
-                  message: Token de autenticación inválido
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
                 Invalid Scheme:
-                 summary: Esquema invalido
-                 value:
-                  code: 401
-                  message: Esquema de autenticacion no valido
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
                 Invalid Header:
-                 summary: Header de autorización no proporcionado
-                 value:
-                  code: 401
-                  message: Encabezado de autorización no proporcionado
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
         '500':
           description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
           content:
@@ -574,20 +622,20 @@ paths:
                 $ref: '#/components/schemas/NoAuth'
               examples:
                 Invalid Token:
-                 summary: Token Invalido
-                 value:
-                  code: 401
-                  message: Token de autenticación inválido
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
                 Invalid Scheme:
-                 summary: Esquema invalido
-                 value:
-                  code: 401
-                  message: Esquema de autenticacion no valido
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
                 Invalid Header:
-                 summary: Header de autorización no proporcionado
-                 value:
-                  code: 401
-                  message: Encabezado de autorización no proporcionado
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
         '500':
           description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
           content:
@@ -662,28 +710,28 @@ paths:
                 $ref: '#/components/schemas/NoAuth'
               examples:
                 Invalid Token:
-                 summary: Token Invalido
-                 value:
-                  code: 401
-                  message: Token de autenticación inválido
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
                 Invalid Scheme:
-                 summary: Esquema invalido
-                 value:
-                  code: 401
-                  message: Esquema de autenticacion no valido
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
                 Invalid Header:
-                 summary: Header de autorización no proporcionado
-                 value:
-                  code: 401
-                  message: Encabezado de autorización no proporcionado
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
         '500':
           description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorInternal'
-      
-  
+
+
 components:
   schemas:
     LoginRequest:
@@ -719,7 +767,7 @@ components:
           type: string
           description: Detalle del error ocurrido al consumir el API
           example: Invalid login body
-          
+
     ErrorRequest:
       type: object
       properties:
@@ -731,7 +779,7 @@ components:
           type: string
           description: Detalle del error ocurrido al consumir el API
           example: Invalid body
-    
+
     ErrorInternal:
       type: object
       properties:
@@ -743,7 +791,7 @@ components:
           type: string
           description: Detalle del error ocurrido al consumir el API
           example: Internal Server Error
-          
+
     ErrorResponseFailedRefreshToken:
       type: object
       properties:
@@ -803,7 +851,7 @@ components:
           type: string
           example: Natha
           description: Apellido perteneciente a la cuenta.
-    
+
     Aggregator:
       type: object
       properties:
@@ -819,7 +867,7 @@ components:
           type: boolean
           example: true
           description: Campo de identificación si el agregador se encuentra activo.
-          
+
     ConfigurationAggregator:
       type: object
       properties:
@@ -847,7 +895,7 @@ components:
       properties:
         last:
           $ref: '#/components/schemas/Configuration'
-    
+
     CreateOrUpdateConfigurationAggregatorRequest:
       type: object
       properties:
@@ -874,7 +922,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CreateOrUpdateConfigurationAggregatorRequest'
-            
+
     ConfigurationAggregatorNew:
       type: object
       properties:
@@ -892,7 +940,7 @@ components:
           description: Tiempo definido para la sincronización del agregador.
         active:
           type: string
-          example: true 
+          example: true
           description: Campo para la identificación si el agregador se encuentra activo.
     ConfigurationCustom:
       type: object
@@ -904,7 +952,7 @@ components:
         syncMaxPoint:
           type: boolean
           example: true
-          description: Campo de identificación si la sincronización se realiza con MaxPoint 
+          description: Campo de identificación si la sincronización se realiza con MaxPoint
         syncTime:
           type: string
           example: 15:00:00
@@ -918,7 +966,7 @@ components:
       properties:
         last:
           $ref: '#/components/schemas/ConfigurationCustom'
-    
+
     CustomResponse:
       type: object
       properties:
@@ -926,11 +974,11 @@ components:
           type: integer
           example: 200
           description: Código de respuesta HTTP
-        message: 
+        message:
           type: string
           example: Configuración guardada
           description: Mensaje que detalla la respuesta de la petición.
-          
+
     CustomResponseSync:
       type: object
       properties:
@@ -938,11 +986,11 @@ components:
           type: integer
           example: 200
           description: Código de respuesta HTTP
-        message: 
+        message:
           type: string
           example: Sincronización ejecutada
           description: Mensaje que detalla la respuesta de la petición.
-    
+
     SyncHistoryResponse:
       type: object
       properties:
@@ -972,7 +1020,7 @@ components:
         total_records:
           type: integer
           example: 7
-    
+
     SyncErrorResponse:
       type: array
       items:
@@ -1009,7 +1057,7 @@ components:
             type: string
             format: date-time
             example: "2024-07-09T11:18:49.525-05:00"
-    
+
     Chains:
       type: array
       items:
@@ -1088,7 +1136,7 @@ components:
           type: integer
           example: 5
           description: Tamaño de la página actual.
-        otherFilters: 
+        otherFilters:
           type: object
           properties:
             searchNameMenu:
@@ -1118,7 +1166,7 @@ components:
                 type: string
                 example: "2024-07-09T18:22:15Z"
                 description: Tiempo de inicio de la sincronización.
-              endTime: 
+              endTime:
                 type: string
                 example: "2024-07-09T18:28:56Z"
                 description: Tiempo de finalización de la sincronización.
@@ -1211,6 +1259,40 @@ components:
                       type: string
                       example: "Rollo clasico de canela o chocolate"
                       description: Description del item.
+                    imageurl:
+                      type: string
+                      example: "https://samercadito.blob.core.windows.net/imagenesv3/domicilio_33882_658x744_1703099153.png"
+                      description: Dirección http de la imagen del producto
+                    priceinfo:
+                      type: object
+                      properties:
+                        price:
+                          type: integer
+                          example: 360
+                          description: Precio del producto.
+                        coreprice:
+                          type: integer
+                          example: 0
+                          description: Precio central del producto.
+                        pricedbyunit:
+                          type: object
+                          properties:
+                            measurementtype:
+                              type: string
+                              example: " "
+                              description: Tipo de medida del producto.
+                            lengthunit:
+                              type: integer
+                              example: 0
+                              description: Logintud por unidad.
+                            weightunit:
+                              type: integer
+                              example: 0
+                              description: Ancho por unidad.
+                            volumeunit:
+                              type: integer
+                              example: 0
+                              description: Volumen por unidad.
         pagination:
           type: object
           properties:
@@ -1230,6 +1312,23 @@ components:
               type: integer
               example: 8
               description: Total de los registros.
+
+
+    verifyResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+          description: Código de respuesta HTTP.
+        message:
+          type: string
+          example: "Done"
+          description: Mensaje de respuesta.
+        valueSync:
+          type: boolean
+          example: true
+          description: Campo de validación si existe o no una sincronización activa.
     
     ResponseDataNoExists:
       type: object
@@ -1244,11 +1343,11 @@ components:
           description: Detalle de la respuesta.
   
   securitySchemes:
-      BearerAuth:
-       type: http
-       scheme: bearer
-       bearerFormat: JWT
-       description: |
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
         Este esquema utiliza el token Bearer para la autenticación. 
         Asegúrate de enviar el token en el encabezado de la solicitud como se muestra a continuación:
         
