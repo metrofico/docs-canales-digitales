@@ -205,6 +205,108 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorInternal'
 
+  /aggregators/sendmenu:
+    post:
+      tags:
+        - Agregadores
+      summary: Envía menús hacia los agregadores
+      description: Este endpoint es utilizado para enviar los menús hacia los agregadores.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                request_menu:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      sync_id:
+                        type: string
+                        description: ID de sincronización
+                        example: "sync123"
+                      checksum:
+                        type: string
+                        description: Checksum de la solicitud
+                        example: "abc123"
+                      metadata:
+                        type: object
+                        properties:
+                          platforms:
+                            type: array
+                            items:
+                              type: string
+                            description: Lista de plataformas
+                            example: [ "platform1", "platform2" ]
+                          restaurant:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  description: ID del restaurante
+                                  example: "rest1"
+                                chain_id:
+                                  type: string
+                                  description: ID de la cadena
+                                  example: "chain1"
+                      categories:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: ID de la categoría
+                              example: "cat1"
+                            products:
+                              type: array
+                              items:
+                                type: string
+                              description: Lista de productos
+                              example: [ "prod1" ]
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se envían los menús hacia los agregadores.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Aggregator'
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+
   /configurations/last:
     get:
       tags:
