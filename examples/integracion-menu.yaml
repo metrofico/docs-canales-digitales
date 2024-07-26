@@ -205,7 +205,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorInternal'
 
-  /aggregators/sendmenu:
+  /menu/sendmenu:
     post:
       tags:
         - Agregadores
