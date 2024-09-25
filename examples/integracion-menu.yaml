@@ -204,6 +204,127 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorInternal'
+  /statusmenu:
+    get:
+      tags:
+        - Agregadores
+      summary: Obtiene las estadísticas de los menús enviados
+      description: Este endpoint es utilizado para obtener el número de menús enviados correctamente, menús sincronizados, menús con errores y menús por agregadores.
+
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se obtienen las estadísticas de los agregadores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatusMenu'
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+
+  /statusmenu/all:
+    post:
+      tags:
+        - Agregadores
+      summary: Obtiene datos de los menús enviados hacia los agregadores
+      description: Retorna el syncrosId, nombre del agregador, estado del envío, modo de envío, payload enviado, respuesta del agregador, identificador del restaurante y el identificador de la cadena.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                aggregators:
+                  type: array
+                  items:
+                    type: string
+                  description: Lista de agregadores
+                  example: [ "UBER","PEYA" ]
+                status:
+                  type: array
+                  items:
+                    type: string
+                  description: Lista de estados (OK, PENDING, FAILED)
+                  example: ["OK"]
+                chains:
+                  type: array
+                  items:
+                    type: integer
+                  description: Lista de identificadores de cadenas
+                  example: [10]
+                restaurants:
+                  items:
+                    type: integer
+                  description: Lista de identificadores de restaurants
+                  type: array
+                  example: [72]
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se retorna los datos de los menús (payloads) enviados hacia los agregadores.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatusMenuPayloads'
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
 
   /menu/sendmenu:
     post:
@@ -218,19 +339,26 @@ paths:
             schema:
               type: object
               properties:
+                token_totp:
+                  type: string
+                  description: Token Totp
                 request_menu:
                   type: array
                   items:
                     type: object
                     properties:
-                      sync_id:
-                        type: string
-                        description: ID de sincronización
-                        example: "sync123"
-                      checksum:
-                        type: string
-                        description: Checksum de la solicitud
-                        example: "abc123"
+                      sync_ids:
+                        type: array
+                        items:
+                          type: string
+                        description: IDs de sincronización
+                        example: ["sync123"]
+                      checksums:
+                        type: array
+                        items:
+                          type: string
+                        description: Lista de Checksums de menus
+                        example: ["abc123"]
                       metadata:
                         type: object
                         properties:
@@ -238,7 +366,7 @@ paths:
                             type: array
                             items:
                               type: string
-                            description: Lista de plataformas
+                            description: Lista de agregadores
                             example: [ "platform1", "platform2" ]
                           restaurant:
                             type: array
@@ -258,6 +386,14 @@ paths:
                         items:
                           type: object
                           properties:
+                            syn_id:
+                              type: string
+                              description: ID de la sincronización
+                              example: "cat1"
+                            checksum:
+                              type: string
+                              description: Checksum del menú
+                              example: "cat1"
                             id:
                               type: string
                               description: ID de la categoría
@@ -266,7 +402,7 @@ paths:
                               type: array
                               items:
                                 type: string
-                              description: Lista de productos
+                              description: Lista de ids productos
                               example: [ "prod1" ]
       responses:
         '200':
@@ -276,7 +412,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Aggregator'
+                  $ref: '#/components/schemas/RequestMenu'
+
+
 
         '401':
           description: Usuario no autenticado
@@ -1203,6 +1341,84 @@ components:
             type: string
             example: "K002"
             description: Código de la tienda.
+    StatusMenu:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            menusSend:
+              type: object
+              properties:
+                total:
+                  type: integer
+                  example: 14
+            menusSyncMxp:
+              type: object
+              properties:
+                total:
+                  type: integer
+                  example: 0
+            menusErrors:
+              type: object
+              properties:
+                total:
+                  type: integer
+                  example: 1
+            agregadores:
+              type: array
+              items:
+                type: object
+                properties:
+                  id_group:
+                    type: string
+                    example: "01ef7a07-d49d-6022-9586-26cf239f42cd"
+                  name_aggregator:
+                    type: string
+                    example: "PEYA"
+                  total:
+                    type: integer
+                    example: 15
+
+    StatusMenuPayloads:
+      type: array
+      items:
+        type: object
+        properties:
+          syncrosAggId:
+            type: string
+            example: "01ef7a00-0ddd-6edb-952a-96e46d2b73cd"
+          aggregatorName:
+            type: string
+            example: "UBER"
+          status:
+            type: string
+            example: "OK"
+          mode:
+            type: string
+            example: "MANUAL"
+          payloadAggregator:
+            type: object
+            example: { }
+          aggregatorResponse:
+            type: string
+            example: "204"
+          storeId:
+            type: integer
+            example: 72
+          cdnId:
+            type: integer
+            example: 10
+    RequestMenu:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: "OK"
+
     FindMenusRequest:
       type: object
       properties:
