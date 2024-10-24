@@ -325,6 +325,633 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorInternal'
+  /chains/<Agregador>:
+    get:
+      tags:
+        - Agregadores
+      summary: Obtiene los datos de la cadena
+      description: Retorna datos de la cadena.
+
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se retorna los datos de la cadena
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/chainsResponse'
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /chains/<Agregador>/<number>:
+    get:
+      tags:
+        - Agregadores
+      summary: Obtiene los datos de una  cadena
+      description: Retorna datos de una cadena.
+
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se retorna los datos de la cadena
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/chainsResponseToGetChain'
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /chains:
+    post:
+      tags:
+        - Agregadores
+      summary: Registra los datos de una cadena
+      description: Retorna el codigo y estado del registro.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                aggregator:
+                  type: string
+                  example: "UBER"
+                cdn_description:
+                  type: string
+                  example: "KENTUCKY FRIED CHICKEN"
+                cdn_name:
+                  type: string
+                  example: "KENTUCKY FRIED CHICKEN"
+                cdn_id:
+                  type: integer
+                  example: 10
+                client_id:
+                  type: string
+                  example: ""
+                client_secret:
+                  type: string
+                  example: ""
+                grand_type:
+                  type: string
+                  example: "client_credentials"
+                scope:
+                  type: string
+                  example: "eats.store"
+                url_login:
+                  type: string
+                  example: "https://login.uber.com/"
+                url_api:
+                  type: string
+                  example: "https://api.uber.com/"
+                url_deny:
+                  type: string
+                  example: "v1/delivery/order/{order}/deny"
+                endpoint_menu:
+                  type: string
+                  example: "/v2/eats/stores"
+                endpoint_producto:
+                  type: string
+                  example: "/v2/eats/stores"
+                status:
+                  type: boolean
+                  example: true
+                payment_method_code:
+                  type: string
+                  example: "192"
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se retorna los datos de los menús (payloads) enviados hacia los agregadores.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                    description: Código de respuesta HTTP.
+                  message:
+                    type: string
+                    example: "Chain created"
+                    description: Detalle de la respuesta.
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /chains/:
+    put:
+      tags:
+        - Agregadores
+      summary: Actualiza los datos de una cadena
+      description: Retorna el codigo y estado del registro.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                aggregator:
+                  type: string
+                  example: "UBER"
+                cdn_description:
+                  type: string
+                  example: "KENTUCKY FRIED CHICKEN"
+                cdn_name:
+                  type: string
+                  example: "KENTUCKY FRIED CHICKEN"
+                cdn_id:
+                  type: integer
+                  example: 10
+                client_id:
+                  type: string
+                  example: ""
+                client_secret:
+                  type: string
+                  example: ""
+                grand_type:
+                  type: string
+                  example: "client_credentials"
+                scope:
+                  type: string
+                  example: "eats.store"
+                url_login:
+                  type: string
+                  example: "https://login.uber.com/"
+                url_api:
+                  type: string
+                  example: "https://api.uber.com/"
+                url_deny:
+                  type: string
+                  example: "v1/delivery/order/{order}/deny"
+                endpoint_menu:
+                  type: string
+                  example: "/v2/eats/stores"
+                endpoint_producto:
+                  type: string
+                  example: "/v2/eats/stores"
+                status:
+                  type: boolean
+                  example: true
+                payment_method_code:
+                  type: string
+                  example: "192"
+      responses:
+        '200':
+          description: Cuando la solicitud se completa se retorna un codigo y mensaje de éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                    description: Código de respuesta HTTP.
+                  message:
+                    type: string
+                    example: "Chain updated"
+                    description: Detalle de la respuesta.
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /chains/<number>:
+    delete:
+      tags:
+        - Agregadores
+      summary: Elimina una cadena
+      description: Retorna el codigo y estado de la operación.
+
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se retorna un codigo y mensaje de exito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                    description: Código de respuesta HTTP.
+                  message:
+                    type: string
+                    example: "Chain deleted"
+                    description: Detalle de la respuesta.
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /restaurants/list:
+    post:
+      tags:
+        - Agregadores
+      summary: Obtiene datos de los restaurantes
+      description: Retorna la información de los restaurantes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                page:
+                  type: integer
+                  description: Número de paágina de filtrado
+                  example: 1
+                rows:
+                  type: integer
+                  description: Número de registros a mostrar
+                  example: 1
+                order:
+                  type: string
+                  description: Orden a mostrar la información
+                  example: DESC
+                chains:
+                  type: array
+                  items:
+                    type: integer
+                  description: Lista de identificadores de cadenas
+                  example: [ 10 ]
+
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se retorna los datos los restaurantes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/restaurantResponse'
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+  /restaurants/<restId>:
+    get:
+      tags:
+        - Agregadores
+      summary: Obtiene datos de un restaurant
+      description: Retorna la información de un restaurant
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se retorna los datos los restaurantes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/restaurantResponsebyRestId'
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+    delete:
+      tags:
+        - Agregadores
+      summary: Elimina un restaurant
+      description: Retorna el código y estado de la operación.
+
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se retorna un codigo y mensaje de exito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                    description: Código de respuesta HTTP.
+                  message:
+                    type: string
+                    example: "Restaurant deleted"
+                    description: Detalle de la respuesta.
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+
+  /restaurants/:
+    post:
+      tags:
+        - Agregadores
+      summary: Registra los datos de un restaurant
+      description: Registra la información de un restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/restaurantResponsebyRestId'
+
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se retorna código y mensaje de la operación
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                    description: Código de respuesta HTTP.
+                  message:
+                    type: string
+                    example: "Restaurant created"
+                    description: Detalle de la respuesta.
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
+    put:
+      tags:
+        - Agregadores
+      summary: Actualiza los datos de un restaurant
+      description: Actualiza la información de un restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/restaurantResponsebyRestId'
+
+      responses:
+        '200':
+          description: Cuando la solicitud se completa con éxito se retorna código y mensaje de la operación
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                    description: Código de respuesta HTTP.
+                  message:
+                    type: string
+                    example: "Restaurant updated"
+                    description: Detalle de la respuesta.
+
+        '401':
+          description: Usuario no autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoAuth'
+              examples:
+                Invalid Token:
+                  summary: Token Invalido
+                  value:
+                    code: 401
+                    message: Token de autenticación inválido
+                Invalid Scheme:
+                  summary: Esquema invalido
+                  value:
+                    code: 401
+                    message: Esquema de autenticacion no valido
+                Invalid Header:
+                  summary: Header de autorización no proporcionado
+                  value:
+                    code: 401
+                    message: Encabezado de autorización no proporcionado
+        '500':
+          description: Error interno en el servidor ocurrido a nivel de codigo del servidor, la respuesta puede variar segun el tipo de error capturado por el API Restful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInternal'
 
   /menu/sendmenu:
     post:
@@ -1409,6 +2036,240 @@ components:
           cdnId:
             type: integer
             example: 10
+
+    chainsResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          aggregator:
+            type: string
+            example: "UBER"
+          cdn_description:
+            type: string
+            example: "KENTUCKY FRIED CHICKEN"
+          cdn_name:
+            type: string
+            example: "KENTUCKY FRIED CHICKEN"
+          cdn_id:
+            type: integer
+            example: 10
+          client_id:
+            type: string
+            example: ""
+          client_secret:
+            type: string
+            example: ""
+          grand_type:
+            type: string
+            example: "client_credentials"
+          scope:
+            type: string
+            example: "eats.store"
+          url_login:
+            type: string
+            example: "https://login.uber.com/"
+          url_api:
+            type: string
+            example: "https://api.uber.com/"
+          url_deny:
+            type: string
+            example: "v1/delivery/order/{order}/deny"
+          endpoint_menu:
+            type: string
+            example: "/v2/eats/stores"
+          endpoint_producto:
+            type: string
+            example: "/v2/eats/stores"
+          status:
+            type: boolean
+            example: true
+          payment_method_code:
+            type: string
+            example: "192"
+
+    chainsResponseToGetChain:
+        type: object
+        properties:
+          aggregator:
+            type: string
+            example: "UBER"
+          cdn_description:
+            type: string
+            example: "KENTUCKY FRIED CHICKEN"
+          cdn_name:
+            type: string
+            example: "KENTUCKY FRIED CHICKEN"
+          cdn_id:
+            type: integer
+            example: 10
+          client_id:
+            type: string
+            example: ""
+          client_secret:
+            type: string
+            example: ""
+          grand_type:
+            type: string
+            example: "client_credentials"
+          scope:
+            type: string
+            example: "eats.store"
+          url_login:
+            type: string
+            example: "https://login.uber.com/"
+          url_api:
+            type: string
+            example: "https://api.uber.com/"
+          url_deny:
+            type: string
+            example: "v1/delivery/order/{order}/deny"
+          endpoint_menu:
+            type: string
+            example: "/v2/eats/stores"
+          endpoint_producto:
+            type: string
+            example: "/v2/eats/stores"
+          status:
+            type: boolean
+            example: true
+          payment_method_code:
+            type: string
+            example: "192"
+
+    restaurantResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        rows:
+          type: integer
+          example: 5
+        order:
+          type: string
+          example: "DESC"
+        total:
+          type: integer
+          example: 781
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              storeCode:
+                type: string
+                example: ""
+              restId:
+                type: integer
+                example: 1236
+              uberId:
+                type: string
+                example: "1236"
+              rappiId:
+                type: string
+                example: "1236"
+              peyaId:
+                type: string
+                example: "1236"
+              didiAppShopId:
+                type: string
+                example: "1236"
+              justoId:
+                type: string
+                example: "1236"
+              active:
+                type: boolean
+                example: true
+              store:
+                type: object
+                properties:
+                  cdn_name:
+                    type: string
+                    example: ""
+                  latitude:
+                    type: integer
+                    example: 0
+                  longitude:
+                    type: integer
+                    example: 0
+                  rst_id:
+                    type: integer
+                    example: 0
+                  ciu_id:
+                    type: integer
+                    example: 0
+                  rst_cod_tienda:
+                    type: string
+                    example: ""
+                  rst_descripcion:
+                    type: string
+                    example: ""
+                  rst_direccion:
+                    type: string
+                    example: ""
+                  cookingTime:
+                    type: integer
+                    example: 0
+
+    restaurantResponsebyRestId:
+      type: object
+      properties:
+        storeCode:
+          type: string
+          example: ""
+        restId:
+          type: integer
+          example: 1236
+        uberId:
+          type: string
+          example: "1236"
+        rappiId:
+          type: string
+          example: "1236"
+        peyaId:
+          type: string
+          example: "1236"
+        didiAppShopId:
+          type: string
+          example: "1236"
+        justoId:
+          type: string
+          example: "1236"
+        active:
+          type: boolean
+          example: true
+        store:
+          type: object
+          properties:
+            cdn_name:
+              type: string
+              example: ""
+            latitude:
+              type: integer
+              example: 0
+            longitude:
+              type: integer
+              example: 0
+            rst_id:
+              type: integer
+              example: 0
+            ciu_id:
+              type: integer
+              example: 0
+            rst_cod_tienda:
+              type: string
+              example: ""
+            rst_descripcion:
+              type: string
+              example: ""
+            rst_direccion:
+              type: string
+              example: ""
+            cookingTime:
+              type: integer
+              example: 0
+
     RequestMenu:
       type: object
       properties:
