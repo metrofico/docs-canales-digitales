@@ -401,7 +401,7 @@ paths:
                   summary: Esquema invalido
                   value:
                     code: 401
-                    message: Esquema de autenticacion no valido
+                    message: Esquema de autenticación no valido
                 Invalid Header:
                   summary: Header de autorización no proporcionado
                   value:
